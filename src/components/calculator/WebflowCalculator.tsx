@@ -172,6 +172,7 @@ function MultiChips({
 /* ---------- Main component ---------- */
 
 export function WebflowCalculator() {
+  useInjectStyles();
   const [step, setStep] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [inputs, setInputs] = useState<Inputs>(defaultInputs);
