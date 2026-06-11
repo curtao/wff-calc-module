@@ -1,29 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { WebflowCalculator } from "@/components/calculator/WebflowCalculator";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Webflow Project Calculator" },
+      {
+        name: "description",
+        content:
+          "Estimate your Webflow project quote and deadline based on experience, scope, complexity and fees.",
+      },
+      { property: "og:title", content: "Webflow Project Calculator" },
+      {
+        property: "og:description",
+        content:
+          "Estimate your Webflow project quote and deadline based on experience, scope, complexity and fees.",
+      },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen w-full">
+      <WebflowCalculator />
     </div>
   );
 }
