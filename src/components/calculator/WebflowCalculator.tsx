@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   calculate,
   cmsOptions,
@@ -156,16 +156,6 @@ function MultiChips({
 /* ---------- Main component ---------- */
 
 export function WebflowCalculator() {
-  useEffect(() => {
-    const el = document.querySelector("code-island");
-    const shadow = el?.shadowRoot;
-    const target = shadow ?? document.head;
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://wff-calc-module.vercel.app/assets/index-B88Yk4g5.css";
-    target.appendChild(link);
-  }, []);
-
   const [step, setStep] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [inputs, setInputs] = useState<Inputs>(defaultInputs);
