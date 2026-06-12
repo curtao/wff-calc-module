@@ -1,5 +1,4 @@
-import "../../styles.css";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   calculate,
   cmsOptions,
@@ -11,6 +10,7 @@ import {
   type Inputs,
 } from "./logic";
 import { Gauge } from "./Gauge";
+import { webflowCalculatorCss } from "./webflowCalculatorCss";
 
 const STEPS = ["Experience", "Scope", "Project", "Bonus", "Availability"] as const;
 
@@ -22,7 +22,7 @@ function Pill({
   onClick,
 }: {
   active: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   onClick: () => void;
 }) {
   return (
@@ -47,7 +47,7 @@ function Field({
 }: {
   title: string;
   hint?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
@@ -157,9 +157,29 @@ function MultiChips({
 /* ---------- Main component ---------- */
 
 export function WebflowCalculator() {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [inputs, setInputs] = useState<Inputs>(defaultInputs);
+
+  useEffect(() => {
+    const rootNode = rootRef.current?.getRootNode();
+    const target = rootNode instanceof ShadowRoot ? rootNode : document.head;
+    const existing = target.querySelector("style[data-webflow-calculator-styles]");
+
+    if (existing) return;
+
+    const style = document.createElement("style");
+    style.setAttribute("data-webflow-calculator-styles", "true");
+    style.textContent = webflowCalculatorCss;
+    target.appendChild(style);
+
+    return () => {
+      if (style.parentNode === target) {
+        style.remove();
+      }
+    };
+  }, []);
 
   const set = <K extends keyof Inputs>(key: K, value: Inputs[K]) =>
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -184,7 +204,7 @@ export function WebflowCalculator() {
   };
 
   return (
-    <div className="font-body w-full bg-secondary p-4 sm:p-8">
+    <div ref={rootRef} className="font-body w-full bg-secondary p-4 sm:p-8">
       <div className="mx-auto grid w-full max-w-5xl gap-6 lg:grid-cols-[260px_1fr]">
         {/* Sidebar */}
         <aside className="hidden self-start rounded-3xl bg-brand p-8 text-brand-foreground lg:block">
