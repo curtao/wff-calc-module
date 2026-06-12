@@ -10,24 +10,8 @@ import {
   type Inputs,
 } from "./logic";
 import { Gauge } from "./Gauge";
-// Compiled CSS as a string so the component carries its own styles
-// even when embedded outside this app (e.g. Webflow DevLink).
-import styles from "../../styles.css?inline";
 
 const STEPS = ["Experience", "Scope", "Project", "Bonus", "Availability"] as const;
-
-const STYLE_ID = "webflow-calculator-styles";
-
-function useInjectStyles() {
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (document.getElementById(STYLE_ID)) return;
-    const styleEl = document.createElement("style");
-    styleEl.id = STYLE_ID;
-    styleEl.textContent = styles;
-    document.head.appendChild(styleEl);
-  }, []);
-}
 
 /* ---------- Small reusable building blocks ---------- */
 
@@ -172,7 +156,13 @@ function MultiChips({
 /* ---------- Main component ---------- */
 
 export function WebflowCalculator() {
-  useInjectStyles();
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://wff-calc-module.vercel.app/assets/index-B88Yk4g5.css";
+    document.head.appendChild(link);
+  }, []);
+
   const [step, setStep] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [inputs, setInputs] = useState<Inputs>(defaultInputs);
