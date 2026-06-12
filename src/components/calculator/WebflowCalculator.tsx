@@ -157,10 +157,13 @@ function MultiChips({
 
 export function WebflowCalculator() {
   useEffect(() => {
+    const el = document.querySelector("code-island");
+    const shadow = el?.shadowRoot;
+    const target = shadow ?? document.head;
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = "https://wff-calc-module.vercel.app/assets/index-B88Yk4g5.css";
-    document.head.appendChild(link);
+    target.appendChild(link);
   }, []);
 
   const [step, setStep] = useState(0);
