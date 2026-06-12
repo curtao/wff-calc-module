@@ -1,3 +1,4 @@
+import "../../styles.css";
 import { useMemo, useState } from "react";
 import {
   calculate,
